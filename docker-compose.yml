@@ -1,0 +1,30 @@
+version: "3.8"
+
+services:
+  backend:
+    build: .
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    env_file:
+      - .env
+    restart: always
+    networks:
+      - app-network
+
+  db:
+    image: postgres:17
+    env_file:
+      - .env
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: always
+    networks:
+      - app-network
+
+volumes:
+  postgres_data:
+
+networks:
+  app-network:
